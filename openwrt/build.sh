@@ -209,7 +209,7 @@ src-git luci https://$github/openwrt/luci.git$luci
 src-git routing https://$github/openwrt/routing.git$routing
 src-git telephony https://$github/openwrt/telephony.git$telephony
 EOF
-echo "src-git wwan https://github.com/immortalwrt/wwan-packages.git" >> ./openwrt/feeds.conf.default
+#echo "src-git wwan https://github.com/immortalwrt/wwan-packages.git" >> ./openwrt/feeds.conf.default
 git clone --depth=1 https://github.com/immortalwrt/wwan-packages.git package/5gwwan
 rm -rf package/5gwwan/drivers/quectel-mhi-pcie
 rm -rf package/5gwwan/drivers/quectel-gobinet
