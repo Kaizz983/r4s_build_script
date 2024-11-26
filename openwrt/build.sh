@@ -216,6 +216,7 @@ rm -rf package/5gwwan/drivers/quectel-gobinet
 #rm -rf package/5gwwan/drivers/fibocom-qmi-wwan
 sed -i 's/strlcpy/strscpy/g' package/5gwwan/drivers/quectel-qmi-wwan/src/qmi_wwan_q.c
 sed -i 's/strlcpy/strscpy/g' package/5gwwan/drivers/fibocom-qmi-wwan/src/qmi_wwan_f.c
+sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/5gwwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
 rm -rf tmp
 # Init feeds
 [ "$(whoami)" = "runner" ] && group "feeds update -a"
