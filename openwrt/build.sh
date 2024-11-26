@@ -213,7 +213,45 @@ EOF
 git clone --depth=1 https://github.com/immortalwrt/wwan-packages.git package/5gwwan
 rm -rf package/5gwwan/drivers/quectel-mhi-pcie
 rm -rf package/5gwwan/drivers/quectel-gobinet
+rm -rf package/5gwwan/drivers/fibocom-qmi-wwan
 rm -rf tmp
+cat > package/5gwwan/utils/quectel-cm/Makefile << 'EOF'
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=quectel-cm
+PKG_VERSION:=1.6.5
+PKG_RELEASE:=2
+
+include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/cmake.mk
+
+define Package/quectel-cm
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=WWAN
+  TITLE:=Qconnector Manager for Quectel WWAN modules
+  DEPENDS:= \
+    +kmod-usb-net-cdc-mbim \
+    +kmod-usb-net-qmi-wwan \
+    +kmod-usb-net-qmi-wwan-quectel \
+    +kmod-usb-serial-option
+endef
+
+define Package/quectel-cm/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/quectel-CM $(1)/usr/bin/quectel-cm
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/quectel-{mbim,qmi}-proxy $(1)/usr/bin/
+
+	$(INSTALL_DIR) $(1)/lib/netifd/proto
+	$(INSTALL_BIN) ./files/quectel.sh $(1)/lib/netifd/proto/
+
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/net
+	$(INSTALL_BIN) ./files/smp-affinity-qmi-usb.sh $(1)/etc/hotplug.d/net/22-smp-affinity-qmi-usb
+endef
+
+$(eval $(call BuildPackage,quectel-cm))
+EOF
+
 # Init feeds
 [ "$(whoami)" = "runner" ] && group "feeds update -a"
 ./scripts/feeds update -a
