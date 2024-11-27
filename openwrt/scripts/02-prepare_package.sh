@@ -12,7 +12,52 @@ git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages
 git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
 
 # wwan
-git clone https://github.com/sbwml/wwan-packages package/new/wwan
+git clone --depth=1 https://github.com/sbwml/wwan-packages package/new/wwan
+sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
+rm -rf package/new/wwan/applications/luci-app-3ginfo-lite
+rm -rf package/new/wwan/applications/luci-app-modemband
+rm -rf package/new/wwan/applications/luci-app-sms-tool-js
+
+git clone --depth=1 https://github.com/4IceG/luci-app-3ginfo-lite package/3ginfo
+git clone --depth=1 https://github.com/4IceG/luci-app-sms-tool-js package/luci-sms
+git clone --depth=1 https://github.com/4IceG/luci-app-modemband  package/slcb
+rm -rf package/3ginfo/sms-tool
+rm -rf package/luci-sms/sms-tool
+rm -rf package/slcb/sms-tool
+
+#
+cat > feeds/packages/utils/sms-tool/Makefile << 'EOF'
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=sms-tool
+PKG_RELEASE:=1
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/Roxy09099/sms_tool.git
+PKG_SOURCE_DATE:=2024-11-28
+PKG_SOURCE_VERSION:=ea42c947e5454b064775aa078daaf9e25b5fba4e
+
+include $(INCLUDE_DIR)/package.mk
+
+define Package/sms-tool
+  SECTION:=utils
+  CATEGORY:=Utilities
+  TITLE:=sms tool
+  URL:=https://github.com/Roxy09099/sms_tool
+endef
+
+define Package/sms-tool/description
+	SMS Tool for 3G/4G/5G modem
+endef
+
+define Package/sms-tool/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sms_tool $(1)/usr/bin/
+endef
+
+$(eval $(call BuildPackage,sms-tool))
+
+EOF
 
 # luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
