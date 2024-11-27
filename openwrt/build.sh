@@ -220,7 +220,7 @@ EOF
 #sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
 #sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/5gluci/application/quectel_CM_5G_M/src/quectel-qrtr-proxy.c
 
-cat > base-files/files/etc/uci-defaults/99_custom << 'EOF'
+cat > base-files/files/etc/uci-defaults/999_custom << 'EOF'
 #!/bin/sh
 
 uci -q delete system.@system[0].zonename
