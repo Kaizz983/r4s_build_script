@@ -211,13 +211,13 @@ src-git telephony https://$github/openwrt/telephony.git$telephony
 EOF
 #echo "src-git wwan https://github.com/immortalwrt/wwan-packages.git" >> ./openwrt/feeds.conf.default
 #git clone --depth=1 https://github.com/immortalwrt/wwan-packages.git package/5gwwan
-git clone --depth=1 https://github.com/FUjr/modem_feeds.git package/5gluci
+#git clone --depth=1 https://github.com/FUjr/modem_feeds.git package/5gluci
 #rm -rf package/5gwwan/drivers/quectel-mhi-pcie
 #rm -rf package/5gwwan/drivers/quectel-gobinet
 #rm -rf package/5gwwan/drivers/fibocom-qmi-wwan
 #sed -i 's/strlcpy/strscpy/g' package/5gwwan/drivers/quectel-qmi-wwan/src/qmi_wwan_q.c
 #sed -i 's/strlcpy/strscpy/g' package/5gwwan/drivers/fibocom-qmi-wwan/src/qmi_wwan_f.c
-sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
+#sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
 #sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/5gluci/application/quectel_CM_5G_M/src/quectel-qrtr-proxy.c
 
 cat > base-files/files/etc/uci-defaults/99_custom << 'EOF'
@@ -228,11 +228,12 @@ uci -q delete system.@system[0].timezone
 uci -q set system.@system[0].zonename='Asia/Ho_Chi_Minh'
 uci -q set system.@system[0].timezone='<+07>-7'
 uci commit system
+uci -q commit
 /etc/init.d/system reload
 
 EOF
 
-rm -rf tmp
+# rm -rf tmp
 # Init feeds
 [ "$(whoami)" = "runner" ] && group "feeds update -a"
 ./scripts/feeds update -a
