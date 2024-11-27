@@ -220,6 +220,18 @@ sed -i 's/strlcpy/strscpy/g' package/5gwwan/drivers/fibocom-qmi-wwan/src/qmi_wwa
 sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/5gwwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
 sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/5gluci/application/quectel_CM_5G_M/src/quectel-qrtr-proxy.c
 
+cat > base-files/files/etc/uci-defaults/99_custom << 'EOF'
+#!/bin/sh
+
+uci -q delete system.@system[0].zonename
+uci -q delete system.@system[0].timezone
+uci -q set system.@system[0].zonename='Asia/Ho_Chi_Minh'
+uci -q set system.@system[0].timezone='<+07>-7'
+uci commit system
+/etc/init.d/system reload
+
+EOF
+
 rm -rf tmp
 # Init feeds
 [ "$(whoami)" = "runner" ] && group "feeds update -a"
