@@ -363,7 +363,7 @@ curl -s $mirror/openwrt/patch/generic-24.10/202-toolchain-gcc-add-support-for-GC
 # gcc config
 [ "$USE_GCC13" = "y" ] && curl -s $mirror/openwrt/generic/config-gcc13 >> .config
 [ "$USE_GCC14" = "y" ] && curl -s $mirror/openwrt/generic/config-gcc14 >> .config
-[ "$USE_GCC15" = "y" ] && curl -s $mirror/openwrt/generic/config-gcc15 >> .config
+[ "$USE_GCC15" = "y" ] && curl -s $mirror/openwrt/generic/config-gcc15-fix >> .config
 [ "$(whoami)" = "runner" ] && endgroup
 
 # uhttpd
