@@ -2,8 +2,8 @@
 
 # Rockchip - rkbin & u-boot
 rm -rf package/boot/rkbin package/boot/uboot-rockchip package/boot/arm-trusted-firmware-rockchip
-git clone https://$github/sbwml/package_boot_uboot-rockchip package/boot/uboot-rockchip
-git clone https://$github/sbwml/arm-trusted-firmware-rockchip package/boot/arm-trusted-firmware-rockchip
+git clone --depth=1 https://$github/sbwml/package_boot_uboot-rockchip package/boot/uboot-rockchip
+git clone --depth=1 https://$github/sbwml/arm-trusted-firmware-rockchip package/boot/arm-trusted-firmware-rockchip
 
 # patch source
 curl -s $mirror/openwrt/patch/generic-24.10/0001-tools-add-upx-tools.patch | patch -p1
@@ -22,7 +22,7 @@ curl -s $mirror/openwrt/patch/generic-24.10/0010-kernel-add-PREEMPT_RT-support-f
 
 # dwarves 1.25
 rm -rf tools/dwarves
-git clone https://$github/sbwml/tools_dwarves tools/dwarves
+git clone --depth=1 https://$github/sbwml/tools_dwarves tools/dwarves
 
 # x86 - disable intel_pstate & mitigations
 sed -i 's/noinitrd/noinitrd intel_pstate=disable mitigations=off/g' target/linux/x86/image/grub-efi.cfg
@@ -46,11 +46,11 @@ fi
 
 # Realtek driver - R8168 & R8125 & R8126 & R8152 & R8101
 rm -rf package/kernel/r8168 package/kernel/r8101 package/kernel/r8125 package/kernel/r8126
-git clone https://$github/sbwml/package_kernel_r8168 package/kernel/r8168
-git clone https://$github/sbwml/package_kernel_r8152 package/kernel/r8152
-git clone https://$github/sbwml/package_kernel_r8101 package/kernel/r8101
-git clone https://$github/sbwml/package_kernel_r8125 package/kernel/r8125
-git clone https://$github/sbwml/package_kernel_r8126 package/kernel/r8126
+git clone --depth=1 https://$github/sbwml/package_kernel_r8168 package/kernel/r8168
+git clone --depth=1 https://$github/sbwml/package_kernel_r8152 package/kernel/r8152
+git clone --depth=1 https://$github/sbwml/package_kernel_r8101 package/kernel/r8101
+git clone --depth=1 https://$github/sbwml/package_kernel_r8125 package/kernel/r8125
+git clone --depth=1 https://$github/sbwml/package_kernel_r8126 package/kernel/r8126
 
 # GCC Optimization level -O3
 if [ "$platform" = "x86_64" ]; then
@@ -72,7 +72,7 @@ curl -s $mirror/openwrt/patch/dpdk/numactl/Makefile > package/new/numactl/Makefi
 # IF USE GLIBC
 if [ "$ENABLE_GLIBC" = "y" ]; then
     # musl-libc
-    git clone https://$gitea/sbwml/package_libs_musl-libc package/libs/musl-libc
+    git clone --depth=1 https://$gitea/sbwml/package_libs_musl-libc package/libs/musl-libc
     # glibc-common
     curl -s $mirror/openwrt/patch/glibc/glibc-common.patch | patch -p1
     # glibc-common - locale data
@@ -88,13 +88,13 @@ fi
 
 # fstools
 rm -rf package/system/fstools
-git clone https://$github/sbwml/package_system_fstools -b openwrt-24.10 package/system/fstools
+git clone --depth=1 https://$github/sbwml/package_system_fstools -b openwrt-24.10 package/system/fstools
 # util-linux
 rm -rf package/utils/util-linux
-git clone https://$github/sbwml/package_utils_util-linux -b openwrt-24.10 package/utils/util-linux
+git clone --depth=1 https://$github/sbwml/package_utils_util-linux -b openwrt-24.10 package/utils/util-linux
 
 # Shortcut Forwarding Engine
-git clone https://$gitea/sbwml/shortcut-fe package/new/shortcut-fe
+git clone --depth=1 https://$gitea/sbwml/shortcut-fe package/new/shortcut-fe
 
 # dnsmasq
 if [ "$version" = "dev" ]; then
@@ -131,13 +131,13 @@ if [ "$version" = "dev" ] || [ "$version" = "rc2" ]; then
 fi
 
 # FullCone module
-git clone https://$gitea/sbwml/nft-fullcone package/new/nft-fullcone
+git clone --depth=1 https://$gitea/sbwml/nft-fullcone package/new/nft-fullcone
 
 # IPv6 NAT
-git clone https://$github/sbwml/packages_new_nat6 package/new/nat6
+git clone --depth=1 https://$github/sbwml/packages_new_nat6 package/new/nat6
 
 # natflow
-git clone https://$github/sbwml/package_new_natflow package/new/natflow
+git clone --depth=1 https://$github/sbwml/package_new_natflow package/new/natflow
 
 # Patch Luci add nft_fullcone/bcm_fullcone & shortcut-fe & natflow & ipv6-nat & custom nft command option
 pushd feeds/luci
@@ -208,25 +208,25 @@ fi
 
 # nghttp3
 rm -rf feeds/packages/libs/nghttp3
-git clone https://$github/sbwml/package_libs_nghttp3 package/libs/nghttp3
+git clone --depth=1 https://$github/sbwml/package_libs_nghttp3 package/libs/nghttp3
 
 # ngtcp2
 rm -rf feeds/packages/libs/ngtcp2
-git clone https://$github/sbwml/package_libs_ngtcp2 package/libs/ngtcp2
+git clone --depth=1 https://$github/sbwml/package_libs_ngtcp2 package/libs/ngtcp2
 
 # curl - fix passwall `time_pretransfer` check
 rm -rf feeds/packages/net/curl
-git clone https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
+git clone --depth=1 https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
 
 # Docker
 rm -rf feeds/luci/applications/luci-app-dockerman
-git clone https://$gitea/sbwml/luci-app-dockerman -b openwrt-23.05 feeds/luci/applications/luci-app-dockerman
+git clone --depth=1 https://$gitea/sbwml/luci-app-dockerman -b openwrt-23.05 feeds/luci/applications/luci-app-dockerman
 if [ "$version" = "dev" ] || [ "$version" = "rc2" ]; then
     rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-    git clone https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
-    git clone https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
-    git clone https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
+    git clone --depth=1 https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
+    git clone --depth=1 https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
+    git clone --depth=1 https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
+    git clone --depth=1 https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
 fi
 sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
 pushd feeds/packages
@@ -258,12 +258,12 @@ sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/ut
 
 # UPnP
 rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
-git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
-git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
+git clone --depth=1 https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.7
+git clone --depth=1 https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
 
 # nginx - latest version
 rm -rf feeds/packages/net/nginx
-git clone https://$github/sbwml/feeds_packages_net_nginx feeds/packages/net/nginx -b openwrt-24.10
+git clone --depth=1 https://$github/sbwml/feeds_packages_net_nginx feeds/packages/net/nginx -b openwrt-24.10
 sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g;s/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/net/nginx/files/nginx.init
 
 # nginx - ubus
@@ -318,7 +318,7 @@ popd
 
 # urngd - 2020-01-21
 rm -rf package/system/urngd
-git clone https://$github/sbwml/package_system_urngd package/system/urngd
+git clone --depth=1 https://$github/sbwml/package_system_urngd package/system/urngd
 
 # zlib - 1.3
 ZLIB_VERSION=1.3.1
@@ -347,7 +347,7 @@ if [ "$platform" = "bcm53xx" ]; then
 fi
 
 # NTP
-sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
-sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' package/base-files/files/bin/config_generate
-sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/files/bin/config_generate
-sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
+#sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
+#sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' package/base-files/files/bin/config_generate
+#sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/files/bin/config_generate
+#sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
