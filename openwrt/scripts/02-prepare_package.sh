@@ -25,39 +25,6 @@ rm -rf package/3ginfo/sms-tool
 rm -rf package/luci-sms/sms-tool
 rm -rf package/slcb/sms-tool
 
-#
-cat > feeds/packages/utils/sms-tool/Makefile << 'EOF'
-include $(TOPDIR)/rules.mk
-
-PKG_NAME:=sms-tool
-PKG_RELEASE:=1
-
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/Roxy09099/sms_tool.git
-PKG_SOURCE_DATE:=2024-11-28
-PKG_SOURCE_VERSION:=f68abf1cad2e41f7d29eb741ecaa51b2db6d451b
-
-include $(INCLUDE_DIR)/package.mk
-
-define Package/sms-tool
-  SECTION:=utils
-  CATEGORY:=Utilities
-  TITLE:=sms tool
-  URL:=https://github.com/Roxy09099/sms_tool
-endef
-
-define Package/sms-tool/description
-	SMS Tool for 3G/4G/5G modem
-endef
-
-define Package/sms-tool/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/sms_tool $(1)/usr/bin/
-endef
-
-$(eval $(call BuildPackage,sms-tool))
-
-EOF
 
 # luci-app-filemanager
 git clone --depth=1 https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
