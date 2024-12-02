@@ -12,7 +12,19 @@ git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages
 git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
 
 # wwan
-git clone https://github.com/sbwml/wwan-packages package/new/wwan
+git clone --depth=1 https://github.com/sbwml/wwan-packages package/new/wwan
+sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
+rm -rf package/new/wwan/applications/luci-app-3ginfo-lite
+rm -rf package/new/wwan/applications/luci-app-modemband
+rm -rf package/new/wwan/applications/luci-app-sms-tool-js
+
+git clone --depth=1 https://github.com/4IceG/luci-app-3ginfo-lite package/3ginfo
+git clone --depth=1 https://github.com/4IceG/luci-app-sms-tool-js package/luci-sms
+git clone --depth=1 https://github.com/4IceG/luci-app-modemband  package/slcb
+rm -rf package/3ginfo/sms-tool
+rm -rf package/luci-sms/sms-tool
+rm -rf package/slcb/sms-tool
+
 
 # luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
