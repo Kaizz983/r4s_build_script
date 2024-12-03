@@ -192,4 +192,7 @@ uci commit system
 uci -q commit
 /etc/init.d/system reload
 
+uci set dockerd.globals.data_root='/opt/dockerd/'
+uci commit
+uci -q commit
 EOF
