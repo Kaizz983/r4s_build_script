@@ -27,6 +27,7 @@ rm -rf package/slcb/sms-tool
 
 
 # luci-app-filemanager
+rm -rf feeds/luci/applications/luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
 
 # luci-app-webdav
