@@ -188,8 +188,7 @@ echo > package/base-files/files/etc/uci-defaults/999_custom
 cat > package/base-files/files/etc/uci-defaults/999_custom << 'EOF'
 #!/bin/sh
 
-uci -q set system.@system[0].zonename='Asia/Ho_Chi_Minh'
-uci -q set system.@system[0].timezone='<+07>-7'
+uci -q set system.@system[0].zonename='Asia/Ho Chi Minh'
 uci commit system
 uci -q commit
 /etc/init.d/system reload
@@ -197,4 +196,8 @@ uci -q commit
 uci set dockerd.globals.data_root='/opt/docker/'
 uci commit
 uci -q commit
+
+/etc/init.d/nqptp stop
+/etc/init.d/nqptp disable
+
 EOF
