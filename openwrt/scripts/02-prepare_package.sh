@@ -13,10 +13,13 @@ git clone https://$github/sbwml/default-settings package/new/default-settings -b
 
 # wwan
 git clone --depth=1 https://github.com/sbwml/wwan-packages package/new/wwan
+git clone --depth=1 https://github.com/FUjr/modem_feeds/tree/main package/new/wwan_cus
 sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan/utils/quectel-cm/src/quectel-qrtr-proxy.c
+sed -i 's/malloc(256)/malloc(sizeof(struct _QCQMIMSG))/g' package/new/wwan_cus/application/quectel_CM_5G_M/src/quectel-qrtr-proxy.c
 rm -rf package/new/wwan/applications/luci-app-3ginfo-lite
 rm -rf package/new/wwan/applications/luci-app-modemband
 rm -rf package/new/wwan/applications/luci-app-sms-tool-js
+rm -rf package/new/wwan_cus/imgs
 
 git clone --depth=1 https://github.com/4IceG/luci-app-3ginfo-lite package/3ginfo
 git clone --depth=1 https://github.com/4IceG/luci-app-sms-tool-js package/luci-sms
